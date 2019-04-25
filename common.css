@@ -1,0 +1,163 @@
+/* Copyright (c) 2019 Marc Baloup
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+
+/* The font used by this layout */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=greek,greek-ext,latin-ext');
+
+:root {
+    --key-size: 12mm;
+    --cutline-overflow: 3mm;
+    --background-overflow: 2mm;
+}
+
+.kb {
+    position: relative;
+}
+#kbmain {
+    width: calc(13 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    height: calc(4 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+}
+#kbspace {
+    margin-top: 10mm;
+    width: calc(4 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    height: calc(1 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+}
+.keys {
+    position: absolute;
+    top: var(--cutline-overflow);
+    left: var(--cutline-overflow);
+    right: var(--cutline-overflow);
+    bottom: var(--cutline-overflow);
+    padding: var(--background-overflow);
+}
+.vcutlines {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--cutline-overflow) + var(--background-overflow));
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+.vcutlines .cutline {
+    width: var(--key-size);
+    border-left: solid 0.2mm gray;
+    box-sizing: border-box;
+}
+.vcutlines .cutline:last-child {
+    width: var(--background-overflow);
+}
+.hcutlines {
+    position: absolute;
+    top: calc(var(--cutline-overflow) + var(--background-overflow));
+    left: 0;
+    right: 0;
+}
+.hcutlines .cutline {
+    height: var(--key-size);
+    border-top: solid 0.2mm gray;
+    box-sizing: border-box;
+}
+.hcutlines .cutline:last-child {
+    height: var(--background-overflow);
+}
+
+
+
+i { /* we use <i> instead of <span> to simplifiy the code */
+    font-style: normal;
+}
+kbd {
+    display: block;
+    float: left;
+    width: var(--key-size);
+    height: var(--key-size);
+    position: relative;
+    box-sizing: content-box;
+    font-family: 'Noto Sans', arial, sans-serif;
+}
+kbd > i {
+    display: block;
+    position: absolute;
+    text-align: center;
+}
+.mmain {
+    font-size: 1em;
+    min-width: 3mm;
+}
+
+
+.mmain.no, .mmain.sh {
+    left: 0.7mm;
+}
+.mmain.al, .mmain.alsh {
+    right: 0.7mm;
+}
+.mmain.no, .mmain.al {
+    bottom: 0.8mm;
+}
+.mmain.sh, .mmain.alsh {
+    top: 0.5mm;
+}
+
+.mmoney, .mgreek, .meuro {
+    font-size: 0.4em;
+    line-height: 1.2em;
+    height: 1.9mm;
+    width: 2mm;
+}
+
+.mmoney.no, .mgreek.no, .meuro.no, .mmoney.sh, .mgreek.sh, .meuro.sh {
+    left: 3.7mm;
+}
+.mmoney.al, .mgreek.al, .meuro.al, .mmoney.alsh, .mgreek.alsh, .meuro.alsh {
+    right: 3.7mm;
+}
+
+.mmoney.sh, .mmoney.alsh {
+    top: 0mm;
+}
+.mgreek.sh, .mgreek.alsh {
+    top: 1.9mm;
+}
+.meuro.sh, .meuro.alsh {
+    top: 3.8mm;
+}
+.mmoney.no, .mmoney.al {
+    top: 5.7mm;
+}
+.mgreek.no, .mgreek.al {
+    top: 7.6mm;
+}
+.meuro.no, .meuro.al {
+    top: 9.5mm;
+}
+
+
+.wspace {
+    width: calc(4 * var(--key-size));
+}
+.f09em {
+    font-size: 0.9em;
+}
