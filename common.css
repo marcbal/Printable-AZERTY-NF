@@ -9,22 +9,36 @@ http://creativecommons.org/licenses/by-nc/4.0/
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=greek,greek-ext,latin-ext');
 
 :root {
-    --key-size: 12mm;
+    --base-key-size: 12mm;
+    --base-key-size-no-unit: 12; /* used in scale calculation, should be equals to --base-key-size but without the unit */
+    --target-key-size-no-unit: 12; /* can be changed programmatically : should be the same unit as used for --base-key-size-no-unit */
+
     --cutline-overflow: 3mm;
     --background-overflow: 2mm;
+
+    --kbmain-rows: 7;
+    --kbmain-cols: 13;
+    --kbspawn-space-width: 4;
+}
+
+
+#kbds {
+    transform-origin: top left;
+    transform: scale(calc(var(--target-key-size-no-unit) / var(--base-key-size-no-unit)));
+    width: calc(var(--kbmain-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
 }
 
 .kb {
     position: relative;
 }
 #kbmain {
-    width: calc(13 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
-    height: calc(4 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    width: calc(var(--kbmain-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    height: calc(var(--kbmain-rows) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
 }
 #kbspace {
     margin-top: 10mm;
-    width: calc(4 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
-    height: calc(1 * var(--key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    width: calc(var(--kbspawn-space-width) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    height: calc(1 * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
 }
 .keys {
     position: absolute;
@@ -45,7 +59,7 @@ http://creativecommons.org/licenses/by-nc/4.0/
     align-items: stretch;
 }
 .vcutlines .cutline {
-    width: var(--key-size);
+    width: var(--base-key-size);
     border-left: solid 0.2mm gray;
     box-sizing: border-box;
 }
@@ -59,7 +73,7 @@ http://creativecommons.org/licenses/by-nc/4.0/
     right: 0;
 }
 .hcutlines .cutline {
-    height: var(--key-size);
+    height: var(--base-key-size);
     border-top: solid 0.2mm gray;
     box-sizing: border-box;
 }
@@ -75,8 +89,8 @@ i { /* we use <i> instead of <span> to simplifiy the code */
 kbd {
     display: block;
     float: left;
-    width: var(--key-size);
-    height: var(--key-size);
+    width: var(--base-key-size);
+    height: var(--base-key-size);
     position: relative;
     box-sizing: content-box;
     font-family: 'Noto Sans', arial, sans-serif;
@@ -110,6 +124,7 @@ kbd > i {
     line-height: 1.2em;
     height: 1.9mm;
     width: 2mm;
+    font-weight: bold;
 }
 
 .mmoney.no, .mgreek.no, .meuro.no, .mmoney.sh, .mgreek.sh, .meuro.sh {
@@ -137,11 +152,56 @@ kbd > i {
 .meuro.no, .meuro.al {
     top: 9.5mm;
 }
+.dmoney, .dgreek, .deuro { /* style of the dead keys for money, greek and european mode */
+    text-decoration: underline;
+}
 
 
 .wspace {
-    width: calc(4 * var(--key-size));
+    width: calc(var(--kbspawn-space-width) * var(--base-key-size));
 }
 .f09em {
     font-size: 0.9em;
+}
+
+
+
+
+
+.keys {
+    background-color: var(--bg-color); /* background color for the keys */
+}
+
+.mmain { /* style for all characters of the main layout */
+    color: var(--txt-color);
+    font-weight: bold;
+}
+
+.dia { /* style for all diacritic dead keys (overrides .mmain style) */
+    color: var(--txt-dia-color);
+}
+.diaghost { /* style for all diacritic decoration (dotted circle) (overrides .mmain style) */
+    color: var(--txt-dia-color);
+    font-weight: normal;
+}
+
+.mmoney, .dmoney { /* style for all characters related to the money mode (+ money mode dead key) */
+    color: var(--txt-money-color);
+}
+.mgreek, .dgreek { /* style for all characters related to the greek mode (+ greek mode dead key) */
+    color: var(--txt-greek-color);
+}
+.meuro, .deuro {  /* style for all characters related to the european mode (+ european mode dead key) */
+    color: var(--txt-euro-color);
+}
+
+
+
+
+
+
+@media print {
+    .noprint {
+        display: none;
+    }
 }

@@ -1,0 +1,6 @@
+.nogrv, .diaghost {
+    visibility: hidden;
+}
+#kbspace {
+    display: none;
+}

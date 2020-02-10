@@ -1,0 +1,6 @@
+:root {
+    --txt-dia-color: var(--txt-color)!important;
+    --txt-money-color: var(--txt-color)!important;
+    --txt-greek-color: var(--txt-color)!important;
+    --txt-euro-color: var(--txt-color)!important;
+}
