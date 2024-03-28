@@ -1,0 +1,6 @@
+#kbmain {
+    display: none;
+}
+#kbfullsymbol {
+    display: block!important;
+}

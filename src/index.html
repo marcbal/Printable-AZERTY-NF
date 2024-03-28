@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2019 Marc Baloup
+
+Licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+http://creativecommons.org/licenses/by-nc/4.0/
+ -->
+<html lang="fr" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Stickers pour clavier à imprimer, AZERTY NF Z71-300</title>
+
+        <link id="style_bg_black" rel="stylesheet" type="text/css" href="themes/bg-black.css"/>
+        <link id="style_bg_white" rel="stylesheet" type="text/css" href="themes/bg-white.css" disabled="disabled"/>
+
+        <link id="style_color_none" rel="stylesheet" type="text/css" href="themes/color-none.css"/>
+        <link id="style_grv_minimal" rel="stylesheet" type="text/css" href="themes/grv-minimal.css"/>
+        <link id="style_keys_full_with_letters" rel="stylesheet" type="text/css" href="themes/keys-full-with-letters.css" disabled="disabled"/>
+        <link id="style_keys_full_symbols" rel="stylesheet" type="text/css" href="themes/keys-full-symbols.css" disabled="disabled"/>
+        <link id="style_cutlines_full" rel="stylesheet" type="text/css" href="themes/cutlines-full.css"/>
+
+        <!-- Common CSS -->
+        <link rel="stylesheet" type="text/css" href="common.css"/>
+
+    </head>
+    <body>
+
+        <p class="noprint" style="line-height: 1.8;">
+            <label for="input_size">Taille de la touche <abbr title="La taille de la touche telle qu’elle sera imprimée.&#013;Astuce : indiquez 1 mm de moins que la taille réelle des touches de votre clavier, pour que ça soit plus facile à coller sans déborder.">(?)</abbr> :
+                <input id="input_size" type="number" autocomplete="off" min="1" style="width: 50px;" step="0.1" oninput="onKeySizeChange(event);" value="12"/>mm</label>
+            <label for="input_bg"><input id="input_bg" type="checkbox" autocomplete="off" oninput="onToggleWhiteBackground(event);"/> Fond blanc</label>
+            <label for="input_color"><input id="input_color" type="checkbox" autocomplete="off" oninput="document.getElementById('style_color_none').disabled = event.target.checked;"/> Couleurs</label>
+            <label for="input_symbols"><input id="input_symbols" type="checkbox" autocomplete="off" oninput="document.getElementById('style_grv_minimal').disabled = event.target.checked;"/> Tous les symboles</label>
+            <label for="input_cutlines"><input id="input_cutlines" type="checkbox" autocomplete="off" oninput="document.getElementById('style_cutlines_full').disabled = !event.target.checked;" checked="checked"/> Lignes de coupe complètes</label>
+            <label for="input_layout">Disposition: <select id="input_layout" onchange="onLayoutChange(event);">
+                <option value="default" selected="selected">Le clavier de base</option>
+                <option value="full_with_letters" title="Rempli une page entière. La quantité pour chaque touche est déterminée empiriquement">Page remplie</option>
+                <option value="full_symbols" title="Rempli une page entière, mais sans les touches des lettres. Idéal pour coller sur un clavier AZERTY traditionnel">Page remplie (sans les lettres)</option>
+            </select></label>
+            <br>
+            Dans les réglages d’impression, assurez-vous que l’échelle soit de 100% et que la taille de la feuille corresponde à celle que vous allez utiliser (A4, ...).
+        </p>
+        <p class="noprint" style="font-size: 0.9em; text-align: right; margin: 0;">
+            © 2019 <a href="https://github.com/marcbal">Marc Baloup</a>.
+            Conception graphique et code source sous licence <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. <a href="https://github.com/marcbal/Printable-AZERTY-NF"><img src="github.svg" style="height: 1.3em; vertical-align: middle;"/></a>
+        </p>
+
+        <p class="printonly">© 2019 Marc Baloup. Conception graphique sous licence <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. <a href="https://azerty-nf.mbaloup.fr/">azerty-nf.mbaloup.fr</a></p>
+
+
+
+        <script type="text/javascript">
+
+            function onKeySizeChange(event) {
+                document.documentElement.style.setProperty('--target-key-size-no-unit', event.target.value);
+            }
+
+            function onToggleWhiteBackground(event) {
+                let checked = event.target.checked;
+                document.getElementById('style_bg_black').disabled = checked;
+                document.getElementById('style_bg_white').disabled = !checked;
+            }
+
+            function onLayoutChange(event) {
+                let value = event.target.value;
+                document.getElementById('style_keys_full_with_letters').disabled = value != "full_with_letters";
+                document.getElementById('style_keys_full_symbols').disabled = value != "full_symbols";
+            }
+
+
+
+            var layoutMain = [
+                ["at"  , "1", "2", "3", "4", "5", "6", "7"  , "8"    , "9"    , "0"        , "quote", "hat"],
+                ["a"   , "z", "e", "r", "t", "y", "u", "i"  , "o"    , "p"    , "minus"    , "plus"],
+                ["q"   , "s", "d", "f", "g", "h", "j", "k"  , "l"    , "m"    , "div"      , "mult"],
+                ["ltgt", "w", "x", "c", "v", "b", "n", "dot", "comma", "colon", "semicolon"]
+            ];
+            var layoutFullWithLetters = [
+                ["at"  , "1", "2", "3", "4", "5", "6", "7"  , "8"    , "9"    , "0"        , "quote", "hat", "div", "r", "r", "r", "r"],
+                ["a"   , "z", "e", "r", "t", "y", "u", "i"  , "o"    , "p"    , "minus"    , "plus" , "z"  , "z"  , "z", "z", "z", "z"],
+                ["q"   , "s", "d", "f", "g", "h", "j", "k"  , "l"    , "m"    , "div"      , "mult" , "q"  , "q"  , "q", "q", "q", "q"],
+                ["ltgt", "w", "x", "c", "v", "b", "n", "dot", "comma", "colon", "semicolon", "a"    , "a"  , "v"  , "e", "e", "e", "e"],
+                ["at"  , "1", "2", "3", "4", "5", "6", "7"  , "8"    , "9"    , "0"        , "quote", "hat", "v"  , "t", "t", "t", "t"],
+                ["at"  , "1", "2", "3", "4", "5", "6", "7"  , "8"    , "9"    , "0"        , "quote", "hat", "i"  , "i", "i", "i"],
+                ["a"   , "z", "e", "r", "t", "y", "u", "i"  , "o"    , "p"    , "minus"    , "plus" , "s"  , "s"  , "s", "s", "s", "s"],
+                ["a"   , "z", "e", "r", "t", "y", "u", "i"  , "o"    , "p"    , "minus"    , "plus" , "c"  , "c"  , "o", "o", "o", "o"],
+                ["q"   , "s", "d", "f", "g", "h", "j", "k"  , "l"    , "m"    , "div"      , "mult" , "d"  , "d"  , "d", "d", "d", "d"],
+                ["q"   , "s", "d", "f", "g", "h", "j", "k"  , "l"    , "m"    , "div"      , "mult" , "c"  , "c"  , "l", "l", "l", "l"],
+                ["ltgt", "w", "x", "c", "v", "b", "n", "dot", "comma", "colon", "semicolon", "p"    , "p"  , "u"  , "u", "u", "u"],
+                ["ltgt", "w", "x", "c", "v", "b", "n", "dot", "comma", "colon", "semicolon", "n"    , "n"  , "n"  , "n"]
+            ];
+            var layoutFullSymbols = [
+                ["at", "at", "at", "at", "at", "at", "at", "at", "at", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
+                ["2", "2", "2", "2", "2", "2", "2", "2", "2", "3", "3", "3", "3", "3", "3", "3", "3", "3"],
+                ["4", "4", "4", "4", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5", "5", "5", "5", "5"],
+                ["6", "6", "6", "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7", "7", "7"],
+                ["8", "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"],
+                ["0", "0", "0", "0", "0", "0", "quote", "quote", "quote", "quote", "quote", "quote", "hat", "hat", "hat", "hat", "hat", "hat"],
+                ["minus", "minus", "minus", "minus", "minus", "minus", "minus", "minus", "minus", "plus", "plus", "plus", "plus", "plus", "plus", "plus", "plus", "plus"],
+                ["div", "div", "div", "div", "div", "div", "div", "div", "div", "mult", "mult", "mult", "mult", "mult", "mult", "mult", "mult", "mult"],
+                ["dot", "dot", "dot", "dot", "dot", "dot", "dot", "dot", "dot", "comma", "comma", "comma", "comma", "comma", "comma", "comma", "comma", "comma"],
+                ["colon", "colon", "colon", "colon", "colon", "colon", "colon", "colon", "colon", "semicolon", "semicolon", "semicolon", "semicolon", "semicolon", "semicolon", "semicolon", "semicolon", "semicolon"],
+            ];
+
+            function fillLayout(container, layout, rows, cols) {
+                container.appendChild(document.importNode(document.getElementById('tp_keyboard').content, true));
+                let vCutlinesContainer = container.querySelector('.vcutlines');
+                let hCutlinesContainer = container.querySelector('.hcutlines');
+                let keysContainer = container.querySelector('.keys');
+                
+                for (let i = 0; i <= cols; i++) {
+                    vCutlinesContainer.appendChild(document.importNode(document.getElementById('tp_cutline').content, true));
+                }
+                for (let i = 0; i <= rows; i++) {
+                    hCutlinesContainer.appendChild(document.importNode(document.getElementById('tp_cutline').content, true));
+                }
+
+                for (let i = 0; i < layout.length; i++) {
+                    if (i != 0) {
+                        keysContainer.appendChild(document.importNode(document.getElementById('tp_newline').content, true));
+                    }
+                    let line = layout[i];
+                    line.forEach(key => {
+                        let kbd = document.createElement('kbd');
+                        
+                        let template = document.getElementById("tp_key_" + key)
+                        if (template != null) {
+                            kbd.appendChild(document.importNode(template.content, true));
+                        }
+                        else {
+                            console.error("Unable to find template for key '" + key + "'")
+                        }
+                        keysContainer.appendChild(kbd);
+                    });
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                fillLayout(document.querySelector('#kbmain'), layoutMain, 4, 13);
+                fillLayout(document.querySelector('#kbfull'), layoutFullWithLetters, 12, 18);
+                fillLayout(document.querySelector('#kbfullsymbol'), layoutFullSymbols, 10, 18);
+
+                document.getElementById('input_layout').value = "default";
+
+                document.querySelectorAll('kbd[data-key]').forEach(target => {
+                    let template = document.getElementById("tp_key_" + target.dataset.key)
+                    if (template == null)
+                        return;
+                    target.appendChild(document.importNode(template.content, true));
+                });
+
+                
+            });
+
+        </script>
+
+
+
+
+        <div id="kbds">
+
+            <div class="kb" id="kbmain"></div>
+            <div class="kb" id="kbfull"></div>
+            <div class="kb" id="kbfullsymbol"></div>
+
+
+            <div class="kb nogrv" id="kbspace">
+                <div class="vcutlines">
+                    <div class="cutline" style="width: calc(var(--kbspace-width) * var(--base-key-size));"></div>
+                    <div class="cutline"></div>
+                </div>
+
+
+                <div class="hcutlines">
+                    <div class="cutline"></div>
+                    <div class="cutline"></div>
+                </div>
+                <div class="keys">
+                    <kbd class="wspace">
+                        <i class="mmain no nogrv" title="Espace">␣</i>
+                        <i class="mmain sh nogrv" title="Espace">␣</i>
+                        <i class="mmain al nogrv" title="Espace insécable">⍽</i>
+                        <i class="mmain alsh nogrv" title="Espace insécable fine" style="font-size: 0.8em;">⍽</i>
+                    </kbd>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="templates" style="display: none">
+            <template id="tp_keyboard">
+                <div class="vcutlines"></div>
+                <div class="hcutlines"></div>
+                <div class="keys"></div>
+            </template>
+
+            <template id="tp_cutline">
+                <div class="cutline"></div>
+            </template>
+
+            <template id="tp_newline">
+                <div style="clear: left;"></div>
+            </template>
+
+            <template id="tp_key_at">
+                <i class="mmain no">@</i>
+                <i class="mmain sh">#</i>
+                <i class="mmain al diaghost nogrv">◌</i><i class="mmain al dia nogrv">˘</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">̑ </i> <!-- TODO Find the spacing modifier letter of the inverted breve -->
+            </template>
+
+            <template id="tp_key_1">
+                <i class="mmain no">à</i>
+                <i class="mmain sh">1</i>
+                <i class="mmain al">§</i>
+                <i class="mmain alsh nogrv">À</i>
+            </template>
+
+            <template id="tp_key_2">
+                <i class="mmain no">é</i>
+                <i class="mmain sh">2</i>
+                <i class="mmain al diaghost">◌</i><i class="mmain al dia">´</i>
+                <i class="mmain alsh nogrv">É</i>
+            </template>
+
+            <template id="tp_key_3">
+                <i class="mmain no">è</i>
+                <i class="mmain sh">3</i>
+                <i class="mmain al diaghost">◌</i><i class="mmain al dia">`</i>
+                <i class="mmain alsh nogrv">È</i>
+            </template>
+
+            <template id="tp_key_4">
+                <i class="mmain no">ê</i>
+                <i class="mmain sh">4</i>
+                <i class="mmain al">&amp;</i>
+                <i class="mmain alsh nogrv">Ê</i>
+            </template>
+
+            <template id="tp_key_5">
+                <i class="mmain no">(</i>
+                <i class="mmain sh">5</i>
+                <i class="mmain al">[</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">˝</i>
+            </template>
+
+            <template id="tp_key_6">
+                <i class="mmain no">)</i>
+                <i class="mmain sh">6</i>
+                <i class="mmain al">]</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">̏ </i> <!-- TODO Find the spacing modifier letter of the double grave accent -->
+            </template>
+
+            <template id="tp_key_7">
+                <i class="mmain no">‘</i>
+                <i class="mmain sh">7</i>
+                <i class="mmain al diaghost nogrv">◌</i><i class="mmain al dia nogrv">ˉ</i>
+
+                <i class="meuro no nogrv">‚</i>
+                <i class="meuro sh nogrv">›</i>
+            </template>
+
+            <template id="tp_key_8">
+                <i class="mmain no">’</i>
+                <i class="mmain sh">8</i>
+                <i class="mmain al">_</i>
+                <i class="mmain alsh nogrv">—</i>
+
+                <i class="meuro no nogrv">‘</i>
+                <i class="meuro sh nogrv">‹</i>
+            </template>
+
+            <template id="tp_key_9">
+                <i class="mmain no">«</i>
+                <i class="mmain sh">9</i>
+                <i class="mmain al">“</i>
+                <i class="mmain alsh nogrv">‹</i>
+
+                <i class="meuro no nogrv">„</i>
+                <i class="meuro sh nogrv">»</i>
+            </template>
+
+            <template id="tp_key_0">
+                <i class="mmain no">»</i>
+                <i class="mmain sh">0</i>
+                <i class="mmain al">”</i>
+                <i class="mmain alsh nogrv">›</i>
+
+                <i class="meuro no nogrv">“</i>
+                <i class="meuro sh nogrv">«</i>
+            </template>
+
+            <template id="tp_key_quote">
+                <i class="mmain no">'</i>
+                <i class="mmain sh">"</i>
+                <i class="mmain al">°</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">˚</i>
+
+                <i class="meuro no nogrv">’</i>
+            </template>
+
+            <template id="tp_key_hat">
+                <i class="mmain no diaghost">◌</i><i class="mmain no dia">ˆ</i> <!-- We use U+02C6 for consistency with other diacritics but it should be U+005E as a base character for drivers -->
+                <i class="mmain sh diaghost">◌</i><i class="mmain sh dia">¨</i>
+                <i class="mmain al diaghost">◌</i><i class="mmain al dia">ˇ</i> <!-- This one is thinner than U+02C6 in appearance -->
+            </template>
+
+
+            <template id="tp_key_a">
+                <i class="mmain no nogrv">a</i>
+                <i class="mmain sh">A</i>
+                <i class="mmain al">æ</i>
+                <i class="mmain alsh nogrv">Æ</i>
+
+                <i class="mmoney sh nogrv">₳</i>
+
+                <i class="mgreek no nogrv">α</i>
+                <i class="mgreek sh nogrv">Α</i>
+
+                <i class="meuro no nogrv">ª</i>
+            </template>
+
+            <template id="tp_key_z">
+                <i class="mmain no nogrv">z</i>
+                <i class="mmain sh">Z</i>
+                <i class="mmain al">£</i>
+
+                <i class="mgreek no nogrv">ζ</i>
+                <i class="mgreek sh nogrv">Ζ</i>
+            </template>
+
+            <template id="tp_key_e">
+                <i class="mmain no nogrv">e</i>
+                <i class="mmain sh">E</i>
+                <i class="mmain al">€</i>
+
+                <i class="mmoney no nogrv">₠</i>
+                <i class="mmoney alsh nogrv">¤</i>
+
+                <i class="mgreek no nogrv">ε</i>
+                <i class="mgreek sh nogrv">Ε</i>
+
+                <i class="meuro no nogrv">ə</i>
+                <i class="meuro sh nogrv">Ə</i>
+            </template>
+
+            <template id="tp_key_r">
+                <i class="mmain no nogrv">r</i>
+                <i class="mmain sh">R</i>
+                <i class="mmain al">®</i>
+
+                <i class="mmoney no nogrv">₽</i>
+                <i class="mmoney sh nogrv">₹</i>
+                <i class="mmoney al nogrv">₨</i>
+
+                <i class="mgreek no nogrv">ρ</i>
+                <i class="mgreek sh nogrv">Ρ</i>
+            </template>
+
+            <template id="tp_key_t">
+                <i class="mmain no nogrv">t</i>
+                <i class="mmain sh">T</i>
+                <i class="mmain al">{</i>
+                <i class="mmain alsh nogrv">™</i>
+
+                <i class="mmoney no nogrv">₸</i>
+                <i class="mmoney sh nogrv">₮</i>
+
+                <i class="meuro no nogrv">Þ</i>
+                <i class="meuro sh nogrv">þ</i>
+            </template>
+
+            <template id="tp_key_y">
+                <i class="mmain no nogrv">y</i>
+                <i class="mmain sh">Y</i>
+                <i class="mmain al">}</i>
+
+                <i class="mmoney no nogrv">¥</i>
+            </template>
+
+            <template id="tp_key_u">
+                <i class="mmain no nogrv">u</i>
+                <i class="mmain sh">U</i>
+                <i class="mmain al">ù</i>
+                <i class="mmain alsh nogrv">Ù</i>
+
+                <i class="mgreek no nogrv">θ</i>
+                <i class="mgreek sh nogrv">Θ</i>
+            </template>
+
+            <template id="tp_key_i">
+                <i class="mmain no nogrv">i</i>
+                <i class="mmain sh">I</i>
+                <i class="mmain al diaghost nogrv">◌</i><i class="mmain al dia nogrv">˙</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">&nbsp;&nbsp;&nbsp;̣ </i> <!-- TODO Find the spacing modifier letter of the "dot below" -->
+                <!-- The &nbsp; above are only for a correct rendering of the diacritics (probably specific to the current font) -->
+
+                <i class="mgreek no nogrv">ι</i>
+                <i class="mgreek sh nogrv">Ι</i>
+
+                <i class="meuro no nogrv">ı</i>
+                <i class="meuro sh nogrv">İ</i>
+            </template>
+
+            <template id="tp_key_o">
+                <i class="mmain no nogrv">o</i>
+                <i class="mmain sh">O</i>
+                <i class="mmain al">œ</i>
+                <i class="mmain alsh nogrv">Œ</i>
+
+                <i class="mgreek no nogrv">ο</i>
+                <i class="mgreek sh nogrv">Ο</i>
+
+                <i class="meuro no nogrv">º</i>
+            </template>
+
+            <template id="tp_key_p">
+                <i class="mmain no nogrv">p</i>
+                <i class="mmain sh">P</i>
+                <i class="mmain al f09em">%</i>
+                <i class="mmain alsh f09em nogrv">‰</i>
+
+                <i class="mmoney no nogrv">₱</i>
+                <i class="mmoney sh nogrv">₧</i>
+                <i class="mmoney al nogrv">₰</i>
+
+                <i class="mgreek no nogrv">π</i>
+                <i class="mgreek sh nogrv">Π</i>
+            </template>
+
+            <template id="tp_key_minus">
+                <i class="mmain no">-</i>
+                <i class="mmain sh">–</i>
+                <i class="mmain al nogrv">−</i>
+                <i class="mmain alsh nogrv">‑</i>
+            </template>
+
+            <template id="tp_key_plus">
+                <i class="mmain no">+</i>
+                <i class="mmain sh">±</i>
+                <i class="mmain al nogrv">†</i>
+                <i class="mmain alsh nogrv">‡</i>
+            </template>
+
+            <template id="tp_key_q">
+                <i class="mmain no nogrv">q</i>
+                <i class="mmain sh">Q</i>
+                <i class="mmain al nogrv">θ</i>
+                <i class="mmain alsh nogrv">Θ</i>
+            </template>
+
+            <template id="tp_key_s">
+                <i class="mmain no nogrv">s</i>
+                <i class="mmain sh">S</i>
+                <i class="mmain al">ß</i>
+                <i class="mmain alsh nogrv">ẞ</i>
+
+                <i class="mmoney no nogrv">₪</i>
+                <i class="mmoney sh nogrv">₷</i>
+
+                <i class="mgreek no nogrv">σ</i>
+                <i class="mgreek sh nogrv">Σ</i>
+
+                <i class="meuro no nogrv">ſ</i>
+            </template>
+
+            <template id="tp_key_d">
+                <i class="mmain no nogrv">d</i>
+                <i class="mmain sh">D</i>
+                <i class="mmain al">$</i>
+
+                <i class="mmoney no nogrv">₫</i>
+                <i class="mmoney sh nogrv">₯</i>
+
+                <i class="mgreek no nogrv">δ</i>
+                <i class="mgreek sh nogrv">Δ</i>
+
+                <i class="meuro no nogrv">ð</i>
+                <i class="meuro sh nogrv">Ð</i>
+            </template>
+
+            <template id="tp_key_f">
+                <i class="mmain no nogrv">f</i>
+                <i class="mmain sh">F</i>
+                <i class="mmain al dmoney">¤</i>
+
+                <i class="mmoney no nogrv">ƒ</i>
+                <i class="mmoney sh nogrv">₣</i>
+            </template>
+
+            <template id="tp_key_g">
+                <i class="mmain no nogrv">g</i>
+                <i class="mmain sh">G</i>
+                <i class="mmain al dgreek">μ</i>
+
+                <i class="mmoney no nogrv">₲</i>
+
+                <i class="mgreek no nogrv">γ</i>
+                <i class="mgreek sh nogrv">Γ</i>
+
+                <i class="meuro no nogrv">ŋ</i>
+                <i class="meuro sh nogrv">Ŋ</i>
+            </template>
+
+            <template id="tp_key_h">
+                <i class="mmain no nogrv">h</i>
+                <i class="mmain sh">H</i>
+                <i class="mmain al deuro f09em">Eu</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">ˍ</i>
+
+                <i class="mmoney no nogrv">₴</i>
+
+                <i class="mgreek no nogrv">η</i>
+                <i class="mgreek sh nogrv">Η</i>
+            </template>
+
+            <template id="tp_key_j">
+                <i class="mmain no nogrv">j</i>
+                <i class="mmain sh">J</i>
+
+                <i class="mgreek no nogrv">ξ</i>
+                <i class="mgreek sh nogrv">Ξ</i>
+
+                <i class="meuro no nogrv">ĳ</i>
+                <i class="meuro sh nogrv">Ĳ</i>
+            </template>
+
+            <template id="tp_key_k">
+                <i class="mmain no nogrv">k</i>
+                <i class="mmain sh">K</i>
+                <i class="mmain al diaghost">◌</i><i class="mmain al dia"≯ </i> <!-- TODO Find the spacing modifier letter of the "long solidus overlay" -->
+
+                <i class="mmoney no nogrv">₭</i>
+
+                <i class="mgreek no nogrv">κ</i>
+                <i class="mgreek sh nogrv">Κ</i>
+            </template>
+
+            <template id="tp_key_l">
+                <i class="mmain no nogrv">l</i>
+                <i class="mmain sh">L</i>
+                <i class="mmain al">|</i>
+
+                <i class="mmoney no nogrv">₺</i>
+                <i class="mmoney sh nogrv">₤</i>
+                <i class="mmoney al nogrv">₾</i>
+
+                <i class="mgreek no nogrv">λ</i>
+                <i class="mgreek sh nogrv">Λ</i>
+            </template>
+
+            <template id="tp_key_m">
+                <i class="mmain no nogrv">m</i>
+                <i class="mmain sh">M</i>
+                <i class="mmain al nogrv">∞</i>
+
+                <i class="mmoney no nogrv" style="left: 4.2mm;">₥</i>
+                <i class="mmoney sh nogrv" style="left: 4.2mm;">ℳ</i>
+                <i class="mmoney al nogrv">₼</i>
+
+                <i class="mgreek no nogrv" style="left: 4.2mm;">μ</i>
+                <i class="mgreek sh nogrv" style="left: 4.2mm;">Μ</i>
+            </template>
+
+            <template id="tp_key_div">
+                <i class="mmain no">/</i>
+                <i class="mmain sh">\</i>
+                <i class="mmain al">÷</i>
+                <i class="mmain alsh nogrv">√</i>
+            </template>
+
+            <template id="tp_key_mult">
+                <i class="mmain no">*</i>
+                <i class="mmain sh">½</i>
+                <i class="mmain al">×</i>
+                <i class="mmain alsh nogrv">¼</i>
+            </template>
+
+            <template id="tp_key_ltgt">
+                <i class="mmain no">&lt;</i>
+                <i class="mmain sh">&gt;</i>
+                <i class="mmain al nogrv">≤</i>
+                <i class="mmain alsh nogrv">≥</i>
+            </template>
+
+            <template id="tp_key_w">
+                <i class="mmain no nogrv">w</i>
+                <i class="mmain sh">W</i>
+                <i class="mmain al nogrv">ʒ</i>
+                <i class="mmain alsh nogrv">Ʒ</i>
+
+                <i class="mmoney no nogrv">₩</i>
+                <i class="mgreek no nogrv">ς</i>
+            </template>
+
+            <template id="tp_key_x">
+                <i class="mmain no nogrv">x</i>
+                <i class="mmain sh">X</i>
+                <i class="mmain al nogrv">©</i>
+            </template>
+
+            <template id="tp_key_c">
+                <i class="mmain no nogrv">c</i>
+                <i class="mmain sh">C</i>
+                <i class="mmain al">ç</i>
+                <i class="mmain alsh nogrv">Ç</i>
+
+                <i class="mmoney no nogrv">¢</i>
+                <i class="mmoney sh nogrv">₡</i>
+                <i class="mmoney al nogrv">₢</i>
+                <i class="mmoney alsh nogrv">₵</i>
+            </template>
+
+            <template id="tp_key_v">
+                <i class="mmain no nogrv">v</i>
+                <i class="mmain sh">V</i>
+                <i class="mmain al diaghost nogrv">◌</i><i class="mmain al dia nogrv">¸</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">˛</i>
+            </template>
+
+            <template id="tp_key_b">
+                <i class="mmain no nogrv">b</i>
+                <i class="mmain sh">B</i>
+                <i class="mmain al diaghost nogrv">◌</i><i class="mmain al dia nogrv">̵ </i> <!-- TODO Find the spacing modifier letter of the "short stroke overlay" -->
+
+                <i class="mmoney no nogrv">₿</i>
+                <!-- the next symbol is supposed to be the character represented in this image, above the bitcoin symbol: http://norme-azerty.fr/img/monetary_level.png
+                        but it seems more logical that this is the bals symbol instead (this is the case in a draft of the standard) -->
+                <i class="mmoney sh nogrv">฿</i>
+
+                <i class="mgreek no nogrv">β</i>
+                <i class="mgreek sh nogrv">Β</i>
+            </template>
+
+            <template id="tp_key_n">
+                <i class="mmain no nogrv">n</i>
+                <i class="mmain sh">N</i>
+                <i class="mmain al diaghost">◌</i><i class="mmain al dia">˜</i> <!-- We use U+02DC for consistency with other diacritics but it should be U+007E as a base character for drivers -->
+
+                <i class="mmoney no nogrv">₦</i>
+
+                <i class="mgreek no nogrv">ν</i>
+                <i class="mgreek sh nogrv">Ν</i>
+            </template>
+
+            <template id="tp_key_dot">
+                <i class="mmain no">.</i>
+                <i class="mmain sh">?</i>
+                <i class="mmain al nogrv">¿</i>
+            </template>
+
+            <template id="tp_key_comma">
+                <i class="mmain no">,</i>
+                <i class="mmain sh">!</i>
+                <i class="mmain al nogrv">¡</i>
+                <i class="mmain alsh diaghost nogrv">◌</i><i class="mmain alsh dia nogrv">̦ </i> <!-- TODO Find the spacing modifier letter of the "comma below" -->
+            </template>
+
+            <template id="tp_key_colon">
+                <i class="mmain no">:</i>
+                <i class="mmain sh">…</i>
+                <i class="mmain al">·</i>
+            </template>
+
+            <template id="tp_key_semicolon">
+                <i class="mmain no">;</i>
+                <i class="mmain sh">=</i>
+                <i class="mmain al nogrv">≃</i>
+                <i class="mmain alsh nogrv">≠</i>
+            </template>
+        </div>
+
+    </body>
+</html>

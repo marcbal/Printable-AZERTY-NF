@@ -16,29 +16,63 @@ http://creativecommons.org/licenses/by-nc/4.0/
     --cutline-overflow: 3mm;
     --background-overflow: 2mm;
 
-    --kbmain-rows: 7;
-    --kbmain-cols: 13;
-    --kbspawn-space-width: 4;
+    --kbmax-cols: 18;
+    --kbspace-width: 4;
+}
+
+body {
+    font-family: 'Noto Sans', arial, sans-serif;
+}
+
+
+
+label {
+    background: #eee;
+    border-radius: 3px;
+    padding: 4px 7px;
+    margin: 5px;
+}
+
+label:hover {
+    background: #e7e7e7;
+}
+
+input, select {
+    font-size: 1em;
+    font-family: 'Noto Sans', arial, sans-serif;
 }
 
 
 #kbds {
     transform-origin: top left;
     transform: scale(calc(var(--target-key-size-no-unit) / var(--base-key-size-no-unit)));
-    width: calc(var(--kbmain-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    width: calc(var(--kbmax-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
 }
 
 .kb {
     position: relative;
+    width: calc(var(--kb-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    height: calc(var(--kb-rows) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
 }
 #kbmain {
-    width: calc(var(--kbmain-cols) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
-    height: calc(var(--kbmain-rows) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    --kb-rows: 4;
+    --kb-cols: 13;
+}
+#kbfull, #kbfullsymbol {
+    display: none;
+}
+#kbfull {
+    --kb-rows: 12;
+    --kb-cols: 18;
+}
+#kbfullsymbol {
+    --kb-rows: 10;
+    --kb-cols: 18;
 }
 #kbspace {
     margin-top: 10mm;
-    width: calc(var(--kbspawn-space-width) * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
-    height: calc(1 * var(--base-key-size) + 2 * var(--background-overflow) + 2 * var(--cutline-overflow));
+    --kb-rows: 1;
+    --kb-cols: var(--kbspace-width);
 }
 .keys {
     position: absolute;
@@ -158,7 +192,7 @@ kbd > i {
 
 
 .wspace {
-    width: calc(var(--kbspawn-space-width) * var(--base-key-size));
+    width: calc(var(--kbspace-width) * var(--base-key-size));
 }
 .f09em {
     font-size: 0.9em;
@@ -202,6 +236,13 @@ kbd > i {
 
 @media print {
     .noprint {
+        display: none;
+    }
+}
+
+
+@media not print {
+    .printonly {
         display: none;
     }
 }
